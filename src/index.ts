@@ -1,6 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import workoutRouter from './routes/workouts.js';
+import userRouter from './routes/user.js';
 import mongoose from 'mongoose';
 
 dotenv.config()
@@ -22,6 +23,7 @@ app.get('/', (req, res) => {
 })
 
 app.use('/api/workouts', workoutRouter);
+app.use('/api/user/', userRouter)
 
 // connect to MongoDB
 mongoose.connect(process.env.MONGODB_ATLAS_URL)
