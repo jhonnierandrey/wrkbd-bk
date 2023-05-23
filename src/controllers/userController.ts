@@ -1,5 +1,6 @@
 import UserModel from '../models/userModel.js';
 import bcrypt from 'bcrypt'
+import validator from 'validator';
 
 // login user
 const loginUser = async (req, res) => {
@@ -10,6 +11,18 @@ const loginUser = async (req, res) => {
 const singUpUser = async (req, res) => {
     const { email, password } = req.body;
     try {
+        // data validation
+        if (!email || !password) {
+            throw Error('All fields must be filled')
+        }
+
+        if (!validator.isEmail(email)) {
+            throw Error('Email is not valid')
+        }
+
+        if (!validator.isStrongPassword(password)) {
+            throw Error('Password is not strong enough')
+        }
 
         const exists = await UserModel.findOne({ email })
 
